@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.comd1324.chaguestserver">
+
+    <!-- ⚙️ 네트워크 통신 관련 권한 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- ForegroundService는 백그라운드 제한 방지용 (Android 9+) -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <!-- Android 14 (API 34) 이상일 경우 선택적: Foreground 유형 명시 가능 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
+
+    <application
+        android:label="ChaGuestServer"
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true"
+        android:allowBackup="true"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+
+        <!-- 🖥️ 메인 액티비티 -->
+        <activity android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- ⚙️ Foreground Service 선언 -->
+        <service
+            android:name=".TcpServerService"
+            android:exported="false"
+            android:foregroundServiceType="connectedDevice" />
+        <!-- connectedDevice: TCP, Bluetooth, etc. 네트워크 관련 서비스용 -->
+        <!-- 필요 시 'dataSync', 'location', 'mediaPlayback' 등으로 변경 가능 -->
+
+    </application>
+
+</manifest>
